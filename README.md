@@ -15,11 +15,23 @@ issues on the issues page of this GitHub repository.
 
 ## Usage
 To use this backend with the `rgbkeyboards` package, simply import this
-module. The backend is automatically registered with `rgbkeyboards`.
+module. The backend must be registered with `rgbkeyboards` before 
+usage with the `register(path=None)` function.
 
 Note that this module depends on `pyusb` with an available backend. On
-Windows, this means that installing a driver-space `libusb0` 
-implementation
+Windows, the backend `libusb1` is enforced and requires a DLL file of 
+which the path must be passed to the `register(path=full_dll_path)`
+function.
+
+The required binary file is located in a 7z-archive that can be 
+downloaded from [here](https://github.com/libusb/libusb/releases). The
+actual DLL-files for 32-bit and 64-bit architectures are located in 
+`/MS32/dll/libusb-1.0.dll` and `/MS64/dll/libusb-1.0.dll` respectively.
+
+This backend is not included with the base `rgbkeyboards` installation
+because the DLL files are packaged in a 7z-archive for Windows, and 
+unpacking those files with Python is impossible in a cross-platform
+implementation.
 
 ## License
 ```

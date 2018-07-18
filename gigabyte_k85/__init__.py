@@ -9,7 +9,7 @@ from array import array
 from usb import core as usb
 # Project Modules
 from rgbkeyboards.keyboard import BaseKeyboard
-from rgbkeyboards.keyboards import register_backend, BACKENDS
+from rgbkeyboards.keyboards import register_backend
 from rgbkeyboards.utilities import get_platform
 
 iManufacturer = "Texas Instruments"
@@ -20,8 +20,15 @@ bProduct = 0x7a14
 WINDOWS = "windows"
 LINUX = "linux"
 
-if iManufacturer not in BACKENDS[get_platform()]:
-    register_backend(get_platform(), iManufacturer, "gigabyte_k85", None)
+
+def register(path=None):
+    """Register the backend with rgbkeyboards"""
+    if path is None and get_platform == WINDOWS:
+        raise ValueError("libusb-1.0 DLL path is required for Windows")
+    if path is not None and get_platform() == LINUX:
+        path = None  # Ignored under Linux
+    register_backend(get_platform(), iManufacturer, "gigabyte_k85", path)
+
 
 PCK_OPTIONS = array('B', [
     # Indices: 6:brightness (0x00-0x05)
