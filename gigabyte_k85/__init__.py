@@ -68,10 +68,7 @@ class Keyboard(BaseKeyboard):
             raise ValueError("libusb1 DLL path is required on Windows")
         if path is not None:
             self._setup_pyusb_hook(path)
-        device = self._get_device_available(True)
-        if device is None:
-            return False
-        self._device = device  # HidDevice / Device
+        self._device = self._get_device_available(True)
 
     @staticmethod
     def _setup_pyusb_hook(path):
@@ -89,6 +86,9 @@ class Keyboard(BaseKeyboard):
         """Enable control on the device by setting default options"""
         if self._device is None:
             raise RuntimeError("No valid device available")
+        assert isinstance(self._device, usb.Device)
+        if self._device.is_kernel_driver_active(3):
+            self._device.detach_kernel_driver(3)
         return self._send_packet(PCK_OPTIONS)
 
     def _disable_control(self):
@@ -108,6 +108,7 @@ class Keyboard(BaseKeyboard):
         """Set the color of all the LEDs on the keyboard"""
         pck = PCK_COLOR.copy()
         pck[4] = r, pck[5] = g, pck[6] = b
+        self._send_packet(PCK_OPTIONS)
         return self._send_packet(pck)
 
     def _set_ind_color(self, keys):
