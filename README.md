@@ -1,4 +1,12 @@
 # Gigabyte K85 Backend
+**Disclaimer**: The current state of this project is *abandoned*. I was
+unable to get the `libusb` library to work under Windows, which made it 
+impossible to test this implementation. Given how I only had access to
+the keyboard for a limited time, continuation of development is now
+impossible for me. This repository is public so its contents can be used
+by anyone who is interested in the code. If you have questions, feel 
+free to post them, but I cannot guarantee satisfactory answers.
+
 This project is part of a larger project to control RGB keyboards from
 Python with a unified interface, check [python-rgb-keyboards](https://github.com/RedFantom/python-rgb-keyboards).
 
@@ -51,9 +59,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
-## Firmware
+## Firmware Update
 The Gigabyte software to control the RGB LEDs on the K85 may prompt to
 execute a firmware update. This may execute fine, but if you find 
 yourself with a seemingly bricked keyboard after a mysterious error
-occurs, please check `/FIRMWARE.md`.
- 
+occurs, please check `/FIRMWARE.md`. Note that this is not related to
+usage or development of this library, it just happened to me while using
+the keyboard. 
